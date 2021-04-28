@@ -1,11 +1,17 @@
-#' This is constructor function mttest
+#' This is constructor function
+#'
+#' This function can be used to do determine whether the population means of two samples are equal or not by performing Hypothesis Testing using a T-Test.
+#'
+#' Primarily T-Test is used when we do not know the variance of the population.
+#'
+#' myttest can perform a T-Test for Paired samples, unpaired samples with equal and unequal variances.
 #'
 #' @param x vector of the data
 #' @param y vector of the data
 #' @param paired  Logical vector
 #' @param alpha   Significance level
 #'
-#' @return  List of data, type of t-test and it's statistics
+#' @return  Return's list of data, type of t-test and it's statistics
 #' @export
 #'
 #' @examples
@@ -25,14 +31,13 @@ myttest <- function(x, y, paired = FALSE, alpha = 0.05) {
     #If the given samples are not paired then
     #Perform F-Test to know the variability of the samples
 
-    testType <- 'T-Test'
     ftest <- var.test(x, y)
     #alternative hypothesis: true ratio of variances is not equal to 1
     #If p-value is > alpha or significance level we fail to reject null
 
     if (ftest$p.value > alpha) {
       #Equal variance
-      testType <- 'Welch'
+      testType <- 'T-TEST'
 
       ttest <-
         t.test(x, y, var.equal = TRUE, conf.level = 1 - alpha)
@@ -45,7 +50,7 @@ myttest <- function(x, y, paired = FALSE, alpha = 0.05) {
     }
     else {
       #Unequal Variance
-      testType <- 'T-Test'
+      testType <- 'WELCH'
 
       ttest <-
         t.test(x, y, var.equal = FALSE, conf.level = 1 - alpha)
@@ -60,7 +65,7 @@ myttest <- function(x, y, paired = FALSE, alpha = 0.05) {
   }
   else{
     #Given samples are paired
-    testType <- 'Paired'
+    testType <- 'PAIRED'
 
     if (length(x) != length(y))
       stop('For Paired Samples Length of X and Y must be same')
@@ -82,9 +87,9 @@ myttest <- function(x, y, paired = FALSE, alpha = 0.05) {
 
   #List containing the results
   lst = list(
-    'Test' = testType,
-    'Conclusion' = conclusion,
-    'Summary' = ttest,
+    'Test_Type' = testType,
+    'Test_Conclusion' = conclusion,
+    'Test_Summary' = ttest,
     'Data' = inputDF
   )
 

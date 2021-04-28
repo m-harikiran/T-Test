@@ -2,7 +2,7 @@
 % Please edit documentation in R/myttest.R
 \name{myttest}
 \alias{myttest}
-\title{This is constructor function mttest}
+\title{This is constructor function}
 \usage{
 myttest(x, y, paired = FALSE, alpha = 0.05)
 }
@@ -16,10 +16,15 @@ myttest(x, y, paired = FALSE, alpha = 0.05)
 \item{alpha}{Significance level}
 }
 \value{
-List of data, type of t-test and it's statistics
+Return's list of data, type of t-test and it's statistics
 }
 \description{
-This is constructor function mttest
+This function can be used to do determine whether the population means of two samples are equal or not by performing Hypothesis Testing using a T-Test.
+}
+\details{
+Primarily T-Test is used when we do not know the variance of the population.
+
+myttest can perform a T-Test for Paired samples, unpaired samples with equal and unequal variances.
 }
 \examples{
 myttest(x=rnorm(30,10,12), y=rnorm(40, 7, 10))
