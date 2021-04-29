@@ -17,3 +17,53 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(ADVTTEST)
 ```
+
+# Introduction
+
+The package `ADVTTEST` can be used to do Hypothesis Testing for underlying means of two populations.
+
+# Testing Package
+
+## Non Paired Salples with Eqlal Variances
+```{r}
+set.seed(32); x=rnorm(30,mean=10,sd=15)
+set.seed(35); y=rnorm(30,mean=8,sd=15)
+ans1=ADVTTEST::myttest(x,y,alpha=0.05,paired=FALSE)
+```
+
+```{r}
+print(ans1)
+```
+```{r}
+plot(ans1)
+```
+
+## Non Paired Salples with Uneqlal Variances
+```{r}
+set.seed(32); x=rnorm(30,mean=10,sd=5)
+set.seed(35); y=rnorm(30,mean=8,sd=15)
+ans2=ADVTTEST::myttest(x,y,alpha=0.05,paired=FALSE)
+```
+
+```{r}
+print(ans2)
+```
+
+```{r}
+plot(ans2)
+```
+
+## Paired Salples
+```{r}
+set.seed(32); x=rnorm(30,mean=10,sd=15)
+set.seed(35); y = x+ rnorm(30, 5 ,4)
+ans3=ADVTTEST::myttest(x,y,alpha=0.05,paired=TRUE)
+```
+
+```{r}
+print(ans3)
+```
+
+```{r}
+plot(ans3)
+```
