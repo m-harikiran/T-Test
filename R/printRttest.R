@@ -1,6 +1,7 @@
 #' Generic print function
 #'
 #' This function can be used to print the confidence interval for difference in means of two samples with it's confidence level and also prints the type of test being performed
+#'
 #' @param x  object of class Rttest
 #'
 #' @return Prints list containing the confidence intervel and type of test
