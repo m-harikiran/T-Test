@@ -25,7 +25,7 @@ plot.Rttest <- function(x) {
       ggplot(df,
              aes(
                x = Variable,
-               y = Data
+               y = Data,
                fill = Variable
              )) + geom_boxplot(outlier.colour = "blue",
                                outlier.size = 2) + labs(
