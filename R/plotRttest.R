@@ -4,19 +4,27 @@
 #'
 #' @param x object of class Rttest
 #'
+#' @param ... extra objects can be sent to method
+#'
 #' @return Returns a boxplot for two values using \code{ggplot()}
 #'
 #' @importFrom ggplot2 ggplot aes theme_bw geom_boxplot labs geom_errorbar
+#' @importFrom utils data
+#'
+#' @rdname plot.Rttest
 #'
 #' @export
 #'
 #' @examples
 #' t = myttest(x=rnorm(30,10,12), y=rnorm(40, 7, 10)); plot(t)
-plot.Rttest <- function(x) {
+plot.Rttest <- function(x, ...) {
   if (!is.list(x))
     stop('The input is not a list')
   if (class(x) != 'Rttest')
     stop('The given input is not an object of class Rttest')
+
+  Variable <- NULL
+  Data <- NULL
 
   if (x$Test_Type != 'PAIRED') {
     #Box Plot for Non-Paired samples

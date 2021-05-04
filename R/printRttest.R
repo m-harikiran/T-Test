@@ -4,12 +4,14 @@
 #'
 #' @param x  object of class Rttest
 #'
+#' @param ... extra objects can be sent to method
+#'
 #' @return Prints list containing the confidence intervel and type of test
 #' @export
 #'
 #' @examples
 #' t = myttest(x=rnorm(30,10,12), y=rnorm(40, 7, 10)); print(t)
-print.Rttest <- function(x) {
+print.Rttest <- function(x, ...) {
   if (!is.list(x))
     stop('The input is not a list')
   if (class(x) != 'Rttest') stop('The given input is not an object of class Rttest')

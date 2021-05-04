@@ -4,10 +4,12 @@
 \alias{print.Rttest}
 \title{Generic print function}
 \usage{
-\method{print}{Rttest}(x)
+\method{print}{Rttest}(x, ...)
 }
 \arguments{
 \item{x}{object of class Rttest}
+
+\item{...}{extra objects can be sent to method}
 }
 \value{
 Prints list containing the confidence intervel and type of test

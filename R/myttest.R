@@ -11,6 +11,8 @@
 #' @param paired  Logical vector
 #' @param alpha   Significance level
 #'
+#'@importFrom stats t.test var.test
+#'
 #' @return  Return's list of data, type of t-test and it's statistics
 #' @export
 #'

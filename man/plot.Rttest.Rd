@@ -4,10 +4,12 @@
 \alias{plot.Rttest}
 \title{Generic Plot function}
 \usage{
-\method{plot}{Rttest}(x)
+\method{plot}{Rttest}(x, ...)
 }
 \arguments{
 \item{x}{object of class Rttest}
+
+\item{...}{extra objects can be sent to method}
 }
 \value{
 Returns a boxplot for two values using \code{ggplot()}
