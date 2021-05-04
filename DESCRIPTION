@@ -7,11 +7,13 @@ Maintainer: Harikiran Madishetti <harikiran.madishetti@ou.edu>
 Description: This package can be used to do determine whether the population means of two samples are equal or not by performing Hypothesis Testing using a T-Test.
               Primarily T-Test is used when we do not know the variance of the population.
               This package can perform a T-Test for Paired samples, unpaired samples with equal and unequal variances.
-              This package also has generic functions print and plot which can be used print test statistics like confidence intervels and plot various boxplots
-License: MIT
+              This package also has generic functions print and plot which can be used print test statistics like confidence intervels and plot various boxplots.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Imports: shiny, ggplot2
+URL: https://github.com/Harikiran-Madishetti/T-Test.git
 Suggests: 
     knitr,
     rmarkdown
