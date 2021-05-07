@@ -14,13 +14,40 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Introduction
+
+The package `ADVTTEST` can be used to do Hypothesis Testing using a T-Test to decide if the population means of two samples are identical or not. This package will run a T-Test on paired samples, unpaired samples, and samples with equivalent and unequal variances.
+
+## Package Installation 
+
+The below are the steps to install the package `ADVTTEST`
+
+1. Install project [R](https://cran.r-project.org "R")
+
+2. Install [R Studio](https://www.rstudio.com/products/rstudio/download/, "R Studio") 
+
+3. Open R Studio and install `devtools` using command 
+`install.packages("devtools")`
+
+4. Install the package `ADVTTEST` using command 
+`devtools::install_github('https://github.com/Harikiran-Madishetti/T-Test.git', auth_token = <token>)`
+
+## Package Functions
+
+This package as the below functions:
+
+1. `myttest` a constructor function
+
+2. `plot.Rttest` a generic plot function for class `Rttest`
+
+3. `print.Rttest` a generic print function for class `Rttest`
+
+4. `shinyttest` a function used to run reactive shiny web application
+
+
 ```{r setup}
 library(ADVTTEST)
 ```
-
-# Introduction
-
-The package `ADVTTEST` can be used to do Hypothesis Testing for underlying means of two populations.
 
 # Testing Package
 
