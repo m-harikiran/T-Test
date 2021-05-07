@@ -15,7 +15,7 @@
 Returns a boxplot for two values using \code{ggplot()}
 }
 \description{
-This function can be used to plot box plots for paired and non paired samples
+This function can be used to plot box plots for paired and  unpaired samples
 }
 \examples{
 t = myttest(x=rnorm(30,10,12), y=rnorm(40, 7, 10)); plot(t)

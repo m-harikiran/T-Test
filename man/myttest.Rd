@@ -20,11 +20,10 @@ Return's list of data, type of t-test and it's statistics
 }
 \description{
 This function can be used to do determine whether the population means of two samples are equal or not by performing Hypothesis Testing using a T-Test.
-}
-\details{
-Primarily T-Test is used when we do not know the variance of the population.
 
-myttest can perform a T-Test for Paired samples, unpaired samples with equal and unequal variances.
+   Primarily T-Test is used when we do not know the variance of the population.
+
+   myttest can perform a T-Test for Paired samples, unpaired samples with equal and unequal variances.
 }
 \examples{
 myttest(x=rnorm(30,10,12), y=rnorm(40, 7, 10))

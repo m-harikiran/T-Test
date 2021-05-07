@@ -1,6 +1,6 @@
 #' Generic Plot function
 #'
-#' This function can be used to plot box plots for paired and non paired samples
+#' This function can be used to plot box plots for paired and  unpaired samples
 #'
 #' @param x object of class Rttest
 #'
