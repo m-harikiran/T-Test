@@ -30,7 +30,7 @@ The below are the steps to install the package `ADVTTEST`
 `install.packages("devtools")`
 
 4. Install the package `ADVTTEST` using command 
-`devtools::install_github('https://github.com/Harikiran-Madishetti/T-Test.git', auth_token = <token>)`
+`devtools::install_github('https://github.com/Harikiran-Madishetti/T-Test.git', auth_token = <token>, build_vignettes = TRUE)`
 
 ## Package Functions
 
