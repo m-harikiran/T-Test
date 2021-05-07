@@ -6,7 +6,7 @@
 #'
 #' @param ... extra objects can be sent to method
 #'
-#' @return Prints list containing the confidence intervel and type of test
+#' @return Prints list containing the confidence interval and type of test
 #' @export
 #'
 #' @examples

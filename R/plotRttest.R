@@ -37,7 +37,7 @@ plot.Rttest <- function(x, ...) {
                fill = Variable
              )) + geom_boxplot(outlier.colour = "blue",
                                outlier.size = 2) + labs(
-                                 title = "Box Plot for non-paired data",
+                                 title = "Box Plot for unpaired samples",
                                  x = "Sample",
                                  y = "Values",
                                  fill = "Sample"
@@ -59,7 +59,7 @@ plot.Rttest <- function(x, ...) {
     gplot <-
       ggplot(df,
              aes(x = Variable,
-                 y = data)) + geom_boxplot(outlier.color = 'red', outlier.size = 2) + labs(title = "Box Plot for Difference between x and y ", x = "Difference", y = "Values(x-y)") +   geom_errorbar(aes(
+                 y = data)) + geom_boxplot(outlier.color = 'red', outlier.size = 2) + labs(title = "Box Plot for difference between paired samples", x = "Difference", y = "Values(x-y)") +   geom_errorbar(aes(
                    ymin  = x$Test_Summary$conf.int[1],
                    ymax  = x$Test_Summary$conf.int[2],
                    width = 0.01

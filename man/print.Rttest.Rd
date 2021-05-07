@@ -12,7 +12,7 @@
 \item{...}{extra objects can be sent to method}
 }
 \value{
-Prints list containing the confidence intervel and type of test
+Prints list containing the confidence interval and type of test
 }
 \description{
 This function can be used to print the confidence interval for difference in means of two samples with it's confidence level and also prints the type of test being performed
