@@ -44,14 +44,148 @@ This package as the below functions:
 
 4. `shinyttest` a function used to run reactive shiny web application
 
+### Constructor 
+
+The constructor function is called `myttest`, and it takes four input samples as vectors, a logical variable (default FALSE) and a numeric variable (default 0.05). Performs hypothesis testing, returning a list of class `Rttest` objects containing the test type, test summary, hypothesis test conclusion, and input sample data.
+```{r eval=FALSE, include=TRUE}
+# Checking if the given input vectors are paired or not
+if (paired == FALSE)
+{
+  #If the given samples are not paired then
+  #Perform F-Test to know the variability of the samples
+  
+  ftest <- var.test(x, y)
+  #alternative hypothesis: true ratio of variances is not equal to 1
+  #If p-value is > alpha or significance level we fail to reject null
+  
+  if (ftest$p.value > alpha) {
+    #Equal variance
+    testType <- 'T-TEST'
+    
+    ttest <-
+      t.test(x, y, var.equal = TRUE, conf.level = 1 - alpha)
+    
+    if (ttest$p.value > alpha) {
+      conclusion <- 'N'
+    } else {
+      conclusion <- 'Y'
+    }
+  }
+  else {
+    #Unequal Variance
+    testType <- 'WELCH'
+    
+    ttest <-
+      t.test(x, y, var.equal = FALSE, conf.level = 1 - alpha)
+    
+    if (ttest$p.value > alpha) {
+      conclusion <- 'N'
+    } else {
+      conclusion <- 'Y'
+    }
+  }
+  
+}
+else{
+  #Given samples are paired
+  testType <- 'PAIRED'
+  
+  if (length(x) != length(y))
+    stop('For Paired Samples Length of X and Y must be same')
+  
+  ttest <- t.test(x, y, paired = TRUE, conf.level = 1 - alpha)
+  
+  if (ttest$p.value > alpha) {
+    conclusion <- 'N'
+  } else {
+    conclusion <- 'Y'
+  }
+}
+
+#List containing the results
+lst = list(
+  'Test_Type' = testType,
+  'Test_Conclusion' = conclusion,
+  'Test_Summary' = ttest,
+  'Data' = inputDF
+)
+```
+
+### Print Generic
+
+The method `print.Rttest` is a generic print method for class `Rttest`. This method takes a class object as an input and prints confidence interval with confidence level and `Y` or `N` conclusion to reject NULL hypothesis.
+
+```{r eval=FALSE, include=TRUE}
+print.Rttest <- function(x, ...) {
+  if (!is.list(x))
+    stop('The input is not a list')
+  if (class(x) != 'Rttest')
+    stop('The given input is not an object of class Rttest')
+  
+  ci <-
+    x$Test_Summary$conf.int   #Accessing the confidence interval from test summary
+  
+  type <- x$Test_Type
+  
+  lst = list('Confidence Interval' = ci, 'Test Type' = type)
+  
+  print(lst)
+}
+```
+
+### Plot Generic
+
+The method `plot.Rttest` is a generic plot method for class `Rttest`. This method takes a class object as an input and plots box plot for unpaired data and box plot of differences if data is paired .
+
+```{r eval=FALSE, include=TRUE}
+#Box Plot for Non-Paired samples
+df = x$Data
+gplot <-
+  ggplot(df,
+         aes(x = Variable,
+             y = Data,
+             fill = Variable)) + geom_boxplot(outlier.colour = "blue",
+                                              outlier.size = 2) + labs(title = "Box Plot for unpaired samples",
+                                                                       x = "Sample",
+                                                                       y = "Values",
+                                                                       fill = "Sample") + theme_bw()
+
+#Box Plot for PAIRED Samples
+df <-
+  data.frame('data' = xValues - yValues, Variable = 'x') #Difference between x and y
+
+gplot <-
+  ggplot(df,
+         aes(x = Variable,
+             y = data)) + geom_boxplot(outlier.color = 'red', outlier.size = 2) + labs(title = "Box Plot for difference between paired samples", x = "Difference", y = "Values(x-y)") +   geom_errorbar(aes(
+               ymin  = x$Test_Summary$conf.int[1],
+               ymax  = x$Test_Summary$conf.int[2],
+               width = 0.01
+             )) + theme_bw()
+
+```
+
+### Shinyttest Method
+
+The method `shinyttest` is used to run shiny web application, which can be used to interact with `ADVTTEST` package in an interactive way. This application displays the input samples data, summary of Hypothesis Testing and box plot's for paired and unpaired samples.
+
+```{r, eval=FALSE, include=TRUE}
+#The code to run the shiny application
+shiny::runApp(system.file("ttest", package = "ADVTTEST"), launch.browser = TRUE)
+```
+
+## Shiny Application
+
+This is a web application which can be used to interact with `ADVTTEST` package in an interactive way. The application can display the samples data, test statistics and box plots in a reactive way. The shiny application has two main components or functions UI and SERVER. In ui method all the components related to ui are defined and in server method all the back end functions are defined. The application can be opened using the command `ADVTTEST::shinyttest()`
+
+
+## Testing Package
 
 ```{r setup}
 library(ADVTTEST)
 ```
 
-# Testing Package
-
-## Non Paired Salples with Eqlal Variances
+### Non Paired Salples with Eqlal Variances
 ```{r}
 set.seed(32); x=rnorm(30,mean=10,sd=15)
 set.seed(35); y=rnorm(30,mean=8,sd=15)
@@ -65,7 +199,7 @@ print(ans1)
 plot(ans1)
 ```
 
-## Non Paired Salples with Uneqlal Variances
+### Non Paired Salples with Uneqlal Variances
 ```{r}
 set.seed(32); x=rnorm(30,mean=10,sd=5)
 set.seed(35); y=rnorm(30,mean=8,sd=15)
@@ -80,7 +214,7 @@ print(ans2)
 plot(ans2)
 ```
 
-## Paired Salples
+### Paired Salples
 ```{r}
 set.seed(32); x=rnorm(30,mean=10,sd=15)
 set.seed(35); y = x+ rnorm(30, 5 ,4)
