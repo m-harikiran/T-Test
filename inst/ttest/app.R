@@ -47,7 +47,9 @@ ui <- fluidPage(
                 'Number of observations',
                 min = 10,
                 max = 1000,
-                value = 30
+                value = 30,
+                step = 1,
+                animate = animationOptions(interval = 200, loop = TRUE)
             ),
 
             # Input: Numeric input for the mean of sample to be generated
@@ -79,7 +81,9 @@ ui <- fluidPage(
                 'Number of observations',
                 min = 10,
                 max = 1000,
-                value = 30
+                value = 30,
+                step = 1,
+                animate = animationOptions(interval = 200, loop = TRUE)
             ),
 
             # Input: Numeric input for the mean of sample to be generated
@@ -107,9 +111,10 @@ ui <- fluidPage(
 
             br(),
 
+            #Slider Input
             sliderInput(
                 'alpha',
-                'Significance Level',
+                'Significance Level (alpha)',
                 min = 0,
                 max = 1,
                 value = 0.05,
@@ -123,12 +128,58 @@ ui <- fluidPage(
             tabsetPanel(
                 type = 'tabs',
                 tabPanel('Samples',
+                         br(),
                          fluidRow(
                              column(5, offset = 2, h4('SAMPLE 1'), tableOutput('sample1')),
                              column(5, h4('SAMPLE 2'), tableOutput('sample2'))
                          )),
-                tabPanel('Plot'),
-                tabPanel('Summary', verbatimTextOutput('summary'))
+
+                tabPanel(
+                    'Summary',
+                    br(),
+                    h4('Type of Test Performed'),
+                    h5(textOutput('testType')),
+
+                    br(),
+                    h4('Test Statistic'),
+                    h5(textOutput('testStastic')),
+
+                    br(),
+                    h4('Degree of Freedom'),
+                    h5(textOutput('testdf')),
+
+                    br(),
+                    h4('P-Value'),
+                    h5(textOutput('testPval')),
+
+                    br(),
+                    h4('Significance Level (alpha)'),
+                    h5(textOutput('testSlev')),
+
+                    br(),
+                    h4(textOutput('confLev')),
+                    h5(textOutput('confInt')),
+
+                    br(),
+                    h4('Sample Estimates'),
+                    h5(textOutput('testMean')),
+
+                    br(),
+                    h4('Test Conclusion'),
+                    h5(textOutput('conclusion')),
+
+                    br(),
+                    h4('Test Summary'),
+                    verbatimTextOutput('summary')
+                ),
+                tabPanel(
+                    'Plot',
+                    br(),
+                    h4('Box Plot'),
+                    br(),
+                    plotOutput('boxPlot', width = '50%')
+                )
+
             ))
     )
 )
@@ -172,7 +223,26 @@ server <- function(input, output) {
     })
 
 
-    testSummary <- reactive(ADVTTEST::myttest(x(), y(), alpha = input$alpha, paired = (input$sampType == 'pair')))
+    testSummary <-
+        reactive(ADVTTEST::myttest(
+            x(),
+            y(),
+            alpha = input$alpha,
+            paired = (input$sampType == 'pair')
+        ))
+
+    confLevel <- reactive(100 - input$alpha * 100)
+
+    testConclusion <- reactive({
+        if (testSummary()$Test_Conclusion == 'Y') {
+            'Since p-value is less than significance level we reject NULL Hypothesis, i.e., true difference in means is not equal to 0'
+        }
+        else {
+            'Since p-value is greater than significance level we fail to reject NULL Hypothesis, i.e., true difference in means is equal to 0'
+        }
+    })
+
+    testPlot <- reactive(plot(testSummary()))
 
 
     output$sample1 <- renderTable({
@@ -183,10 +253,53 @@ server <- function(input, output) {
         y()
     })
 
-    output$summary <- renderPrint({
-        print(testSummary())
+    output$testType <-
+        renderText(testSummary()$Test_Summary$method)
 
+    output$testStastic <-
+        renderText(paste0('t-statistic = ', testSummary()$Test_Summary$statistic))
+
+    output$testdf <-
+        renderText(paste0('df = ', testSummary()$Test_Summary$parameter))
+
+    output$testPval <-
+        renderText(testSummary()$Test_Summary$p.value)
+
+    output$testSlev <- renderText(reactive(input$alpha)())
+
+    output$confLev <-
+        renderText(paste0(confLevel(), ' Percent Confidence Interval'))
+
+    output$confInt <-
+        renderText(
+            paste0(
+                '[',
+                testSummary()$Test_Summary$conf.int[1],
+                ' , ',
+                testSummary()$Test_Summary$conf.int[2],
+                ']'
+            )
+        )
+
+    output$testMean <-
+        renderText(
+            paste0(
+                'Mean of Sample 1 : ',
+                testSummary()$Test_Summary$estimate[1],
+                '\nMean of Sample 2 : ',
+                testSummary()$Test_Summary$estimate[2]
+            )
+        )
+
+    output$conclusion <- testConclusion
+
+    output$summary <- renderPrint({
+        print(testSummary()$Test_Summary)
     })
+
+    output$boxPlot <- renderPlot(testPlot())
+
+
 }
 
 # Run the application
