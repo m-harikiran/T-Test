@@ -47,7 +47,7 @@ This package as the below functions:
 ### Constructor 
 
 The constructor function is called `myttest`, and it takes four input samples as vectors, a logical variable (default FALSE) and a numeric variable (default 0.05). Performs hypothesis testing, returning a list of class `Rttest` objects containing the test type, test summary, hypothesis test conclusion, and input sample data.
-```{r eval=FALSE, include=TRUE}
+```{r, eval=FALSE, include=TRUE}
 # Checking if the given input vectors are paired or not
 if (paired == FALSE)
 {
@@ -115,7 +115,7 @@ lst = list(
 
 The method `print.Rttest` is a generic print method for class `Rttest`. This method takes a class object as an input and prints confidence interval with confidence level and `Y` or `N` conclusion to reject NULL hypothesis.
 
-```{r eval=FALSE, include=TRUE}
+```{r, eval=FALSE, include=TRUE}
 print.Rttest <- function(x, ...) {
   if (!is.list(x))
     stop('The input is not a list')
@@ -137,7 +137,7 @@ print.Rttest <- function(x, ...) {
 
 The method `plot.Rttest` is a generic plot method for class `Rttest`. This method takes a class object as an input and plots box plot for unpaired data and box plot of differences if data is paired .
 
-```{r eval=FALSE, include=TRUE}
+```{r, eval=FALSE, include=TRUE}
 #Box Plot for Non-Paired samples
 df = x$Data
 gplot <-
