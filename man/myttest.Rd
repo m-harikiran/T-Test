@@ -16,7 +16,13 @@ myttest(x, y, paired = FALSE, alpha = 0.05)
 \item{alpha}{Significance level}
 }
 \value{
-Return's list of data, type of t-test and it's statistics
+Return's list with class 'Rttest' containing the following components:
+\tabular{llll}{
+Test_Type \tab \tab a character string indicating what type of t-test was performed.\cr
+Test_Conclusion \tab \tab a character string indicating to reject the NULL of equality of means at the alpha level of significance.\cr
+Test_Summary \tab \tab a list of summary returned by t.test.\cr
+Data \tab \tab a list of input vectors.\cr
+}
 }
 \description{
 This function can be used to do determine whether the population means of two samples are equal or not by performing Hypothesis Testing using a T-Test.
