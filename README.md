@@ -1,6 +1,6 @@
 # Hypothesis Testing for Two Samples
 
-#### Author: Harikiran Madishetti
+#### Author: Harikiran M
 
 ---
 
